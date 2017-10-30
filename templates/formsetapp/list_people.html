@@ -2,17 +2,17 @@
 
 {% block content %}
 
-<a class='btn btn-primary' href="{% url 'add-person' %}">+ Add People</a>
+<a class='btn btn-primary' href="{% url 'person:add' %}">+ Add People</a>
 {% if object_list %}
   <ul style='list-style-type: none; padding: 0'>
   {% for person in object_list %}
-    <li style='border-bottom: 1px solid lightgrey; height: 52px; padding-top: 12px '>
+    <li class='list-element'>
       <div style='float: left'>
-        <strong>{{ person.name|capfirst }}</strong>
+        <strong><a href="{% url 'person:detail' person.id %}">{{ person.name|capfirst }}</a></strong>
       </div>
       <div style='float: right'>
-        <a href="{% url 'edit-person' person.id %}">Editar</a>
-        <a style='color: #cb2353' href="{% url 'delete-person' person.id %}">Eliminar</a>
+        <a href="{% url 'person:edit' person.id %}">Editar</a>
+        <a style='color: #cb2353' href="{% url 'person:delete' person.id %}">Eliminar</a>
       </div>
     </li>
   {% endfor %}

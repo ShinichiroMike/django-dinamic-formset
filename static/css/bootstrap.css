@@ -7082,3 +7082,15 @@ input[type="checkbox"] {
 .person-formset {
   margin-bottom: 10px;
 }
+
+.list-element {
+  border-bottom: 1px solid lightgrey;
+  height: 52px;
+  padding-top: 12px;
+  transition: background-color 0.2s;
+  transition: color 0.2s;
+}
+
+.list-element:hover {
+  background-color: lightgrey;
+}

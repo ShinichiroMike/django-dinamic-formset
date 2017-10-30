@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.forms.formsets import formset_factory
 from django.contrib import messages
 from .forms import PersonForm
 from .models import Person
-from django.views.generic import ListView, UpdateView, DeleteView
+from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 
 def person_formset_view(request):
 
@@ -28,11 +28,11 @@ def person_formset_view(request):
 
         # And notify our users that it worked
         messages.success(request, 'You have updated your people.')
-        return redirect('list-people')
+        return redirect(reverse_lazy('person:list'))
 
       except: #If the transaction failed
         messages.error(request, 'There was an error saving your people.')
-        return redirect('add-person')
+        return redirect(reverse_lazy('person:add'))
 
   else:
     person_formset = PersonFormset()
@@ -51,8 +51,13 @@ class PersonEdit(UpdateView):
   model = Person
   form_class = PersonForm
   template_name = 'formsetapp/edit_person.html'
-  success_url = '/list-people'
+  def get_success_url(self):
+    return reverse('person:detail', kwargs={'pk' : self.object.pk})
 
 class PersonDelete(DeleteView):
   model = Person
-  success_url = '/list-people'
+  success_url = reverse_lazy('person:list')
+
+class PersonDetail(DetailView):
+  model = Person
+  template_name = 'formsetapp/detail_person.html'

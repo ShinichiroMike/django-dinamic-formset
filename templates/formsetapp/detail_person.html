@@ -1,0 +1,7 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<h1>{{ object.name|capfirst }}</h1>
+<a href="{% url 'person:edit' object.id %}">Editar</a>
+<a style='color: #cb2353' href="{% url 'person:delete' object.id %}">Eliminar</a>
+{% endblock %}

@@ -13,14 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
-from formsetapp.views import person_formset_view, PersonList, PersonEdit, PersonDelete
+# from formsetapp.views import person_formset_view, PersonList, PersonEdit, PersonDelete
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^add-person/$', person_formset_view, name='add-person'),
-    url(r'^list-people/$', PersonList.as_view(), name='list-people'),
-    url(r'^edit-person/(?P<pk>\d+)/$', PersonEdit.as_view(), name='edit-person'),
-    url(r'^delete-person/(?P<pk>\d+)/$', PersonDelete.as_view(), name='delete-person')
+    # url(r'^add-person/$', person_formset_view, name='add-person'),
+    # url(r'^list-people/$', PersonList.as_view(), name='list-people'),
+    # url(r'^edit-person/(?P<pk>\d+)/$', PersonEdit.as_view(), name='edit-person'),
+    # url(r'^delete-person/(?P<pk>\d+)/$', PersonDelete.as_view(), name='delete-person')
+    url(r'^person/', include('formsetapp.urls', namespace='person'))
 ]
