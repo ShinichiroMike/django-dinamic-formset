@@ -15,9 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from formsetapp.views import person_formset_view
+from formsetapp.views import person_formset_view, PersonList, PersonEdit, PersonDelete
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^add-person', person_formset_view)
+    url(r'^add-person/$', person_formset_view, name='add-person'),
+    url(r'^list-people/$', PersonList.as_view(), name='list-people'),
+    url(r'^edit-person/(?P<pk>\d+)/$', PersonEdit.as_view(), name='edit-person'),
+    url(r'^delete-person/(?P<pk>\d+)/$', PersonDelete.as_view(), name='delete-person')
 ]

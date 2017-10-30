@@ -4,7 +4,7 @@ from django.forms.formsets import formset_factory
 from django.contrib import messages
 from .forms import PersonForm
 from .models import Person
-
+from django.views.generic import ListView, UpdateView, DeleteView
 
 def person_formset_view(request):
 
@@ -28,10 +28,11 @@ def person_formset_view(request):
 
         # And notify our users that it worked
         messages.success(request, 'You have updated your people.')
+        return redirect('list-people')
 
       except: #If the transaction failed
         messages.error(request, 'There was an error saving your people.')
-        return redirect(reverse('add-person'))
+        return redirect('add-person')
 
   else:
     person_formset = PersonFormset()
@@ -42,3 +43,16 @@ def person_formset_view(request):
 
   return render(request, 'formsetapp/add_person.html', context)
 
+class PersonList(ListView):
+  model = Person
+  template_name = 'formsetapp/list_people.html'
+
+class PersonEdit(UpdateView):
+  model = Person
+  form_class = PersonForm
+  template_name = 'formsetapp/edit_person.html'
+  success_url = '/list-people'
+
+class PersonDelete(DeleteView):
+  model = Person
+  success_url = '/list-people'
